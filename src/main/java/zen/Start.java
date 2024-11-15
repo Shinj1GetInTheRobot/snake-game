@@ -13,6 +13,7 @@ public class Start extends Application {
 
     private static Scene scene;
 
+    @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("home"), 640, 480);
