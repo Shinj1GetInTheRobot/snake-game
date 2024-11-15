@@ -18,6 +18,6 @@ public class HomeController {
 
     private void switchToScene(String sceneName) {
         try { Start.setRoot(sceneName); }
-        catch (IOException e) {}
+        catch (IOException e) { System.out.println(e.getMessage()); }
     }
 }

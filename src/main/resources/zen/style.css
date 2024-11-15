@@ -15,3 +15,13 @@
     -fx-font-weight: bold;
     -fx-background-color: #00ff00
 }
+
+.settingsLabel {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #00ff00;
+    -fx-font-weight: bold;
+}
+
+.settingsSlider {
+    -fx-showTickMarks: true;
+}
