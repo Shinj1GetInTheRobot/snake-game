@@ -1,2 +1,2 @@
 # snake-game
-Snake Game in JavaFX
+(Terrible) Snake Game in JavaFX
