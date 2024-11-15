@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.VBox?>
+<?import java.net.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.HomeController">
-   <Label text="Snake Game"/>
-   <Button fx:id="playBtn" text="Play"/>
-   <Button fx:id="howToPlayBtn" text="How to play?"/>
-   <Button fx:id="settingsBtn" text="Settings"/>
+<VBox styleClass="background" alignment="CENTER" spacing="50.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.HomeController">
+   <Label styleClass="heading" text="Snake Game"/>
+   <VBox spacing="20.0" alignment="CENTER" >
+      <Button fx:id="playBtn" text="Play" styleClass="button"/>
+      <Button fx:id="howToPlayBtn" text="How to play?" styleClass="button"/>
+      <Button fx:id="settingsBtn" text="Settings" styleClass="button"/>
+   </VBox>
+
+   <stylesheets>
+      <URL value="@style.css"/>
+   </stylesheets>
 </VBox>

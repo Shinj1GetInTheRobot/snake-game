@@ -1,0 +1,17 @@
+.background {
+    -fx-background-color:#1b1b1b;
+}
+
+.heading {
+    -fx-font-size: 30pt;
+    -fx-text-fill: #00ff00;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
+.button {
+    -fx-font-size: 15pt;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-background-color: #00ff00
+}
