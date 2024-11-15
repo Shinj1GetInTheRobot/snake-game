@@ -5,8 +5,4 @@ import javafx.fxml.FXML;
 
 public class GameController {
 
-    @FXML
-    private void switchToPrimary() throws IOException {
-        Home.setRoot("home");
-    }
 }
