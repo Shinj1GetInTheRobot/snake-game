@@ -16,7 +16,7 @@ public class Start extends Application {
     @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("home"), 640, 480);
+        scene = new Scene(loadFXML("home"), 960, 540);
         stage.setScene(scene);
         stage.setTitle("Snake Game");
         stage.getIcons().add(new Image(Start.class.getResourceAsStream("snake_icon.png")));

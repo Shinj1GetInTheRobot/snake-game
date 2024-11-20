@@ -1,20 +1,23 @@
 package zen;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
-public class SettingsController {
+public class SettingsController implements Initializable {
 
     @FXML private Slider speedSldr;
     @FXML private Slider growthSldr;
     @FXML private Button playBtn;
     @FXML private Button backBtn;
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle rsc) {
         speedSldr.setValue(Settings.getSpeed());
         speedSldr.valueProperty().addListener((observable, oldValue, newValue) -> Settings.setSpeed((int)Math.round((double)newValue)));
         growthSldr.setValue(Settings.getGrowth());
