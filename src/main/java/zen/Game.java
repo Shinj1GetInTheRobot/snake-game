@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Game {
     private IntegerProperty[][] board;
 
-    public Game(int y, int x) {
+    public Game(int y, int x) { 
         board = createNewBoard(y, x);
     }
     public Game() {
