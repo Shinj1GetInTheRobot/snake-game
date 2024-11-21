@@ -12,8 +12,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.When;
 import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.BooleanProperty;
 
 public class GameController implements Initializable {
     @FXML private TilePane gridTp;
@@ -22,8 +20,8 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
-        game = new Game(Settings.getGridHeight(), Settings.getGridWidth()); // Hardcoded 50 * 25 grid
-        setupGrid(); 
+        game = new Game(Settings.getGridHeight(), Settings.getGridWidth()); 
+        setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
     }
 
