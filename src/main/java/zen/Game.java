@@ -9,16 +9,23 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Game {
     private IntegerProperty[][] board;
-    private final RandomEmptySquareGenerator r;
+    private final RandomEmptySquareGenerator resg;
+    private int snakeLength;
 
     public Game(int y, int x) { 
+        snakeLength = Settings.getGrowth();
         board = createNewEmptyBoard(y, x);
-        r = new RandomEmptySquareGenerator(this);
-        Square rSquare = r.getRandomSquare();
-        board[rSquare.y][rSquare.x].set(1);
+        resg = new RandomEmptySquareGenerator(this);
+        setRandomSquare(snakeLength);
+        setRandomSquare(-1);
     }
     public Game() {
         this(0, 0);
+    }
+
+    public void setRandomSquare(int value) {
+        Square rSquare = resg.getRandomSquare();
+        board[rSquare.y][rSquare.x].set(value);
     }
 
     public int getEntry(int y, int x) { 
