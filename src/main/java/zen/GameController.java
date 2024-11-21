@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,6 +23,12 @@ public class GameController implements Initializable {
         game = new Game(Settings.getGridHeight(), Settings.getGridWidth()); 
         setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
+        Start.addKeyPressedEventToScene(k -> {
+            if (k.getCode() == KeyCode.LEFT) game.setDirection(Direction.LEFT);
+            else if (k.getCode() == KeyCode.RIGHT) game.setDirection(Direction.RIGHT);
+            else if (k.getCode() == KeyCode.UP) game.setDirection(Direction.UP);
+            else if (k.getCode() == KeyCode.DOWN) game.setDirection(Direction.DOWN);
+        });
     }
 
     // No idea why it's not 750 pixels long (50 * 15), so I hardcoded lol

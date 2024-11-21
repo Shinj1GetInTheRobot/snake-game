@@ -1,6 +1,9 @@
 package zen;
 
 import javafx.application.Application;
+import javafx.scene.input.KeyEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +27,10 @@ public class Start extends Application {
 
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
+    }
+
+    static void addKeyPressedEventToScene(EventHandler<KeyEvent> e) {
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, e);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {

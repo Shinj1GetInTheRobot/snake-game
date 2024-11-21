@@ -16,7 +16,7 @@ public class RandomEmptySquareGenerator {
         this.game = game;
     }
 
-    public Square getRandomSquare() {
+    public Square newRandomSquare() {
         List<Square> emptySquares = game.getEmptySquares();
         return emptySquares.get(r.nextInt(emptySquares.size()));
     }
