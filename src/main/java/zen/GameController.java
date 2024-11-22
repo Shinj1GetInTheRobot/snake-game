@@ -43,10 +43,10 @@ public class GameController implements Initializable {
 
     private void setupArrowKeys() {
         Start.addKeyPressedEventToScene(k -> {
-            if (k.getCode() == KeyCode.LEFT && !game.directionIs(Direction.RIGHT)) game.setDirection(Direction.LEFT);
-            else if (k.getCode() == KeyCode.RIGHT && !game.directionIs(Direction.LEFT)) game.setDirection(Direction.RIGHT);
-            else if (k.getCode() == KeyCode.UP && !game.directionIs(Direction.DOWN)) game.setDirection(Direction.UP);
-            else if (k.getCode() == KeyCode.DOWN && !game.directionIs(Direction.UP)) game.setDirection(Direction.DOWN);
+            if (k.getCode() == KeyCode.LEFT && !game.currentDirectionIs(Direction.RIGHT)) game.setFutureDirection(Direction.LEFT);
+            else if (k.getCode() == KeyCode.RIGHT && !game.currentDirectionIs(Direction.LEFT)) game.setFutureDirection(Direction.RIGHT);
+            else if (k.getCode() == KeyCode.UP && !game.currentDirectionIs(Direction.DOWN)) game.setFutureDirection(Direction.UP);
+            else if (k.getCode() == KeyCode.DOWN && !game.currentDirectionIs(Direction.UP)) game.setFutureDirection(Direction.DOWN);
             if (!game.isPlaying() && !game.isGameOver()) game.play();
         });
     }

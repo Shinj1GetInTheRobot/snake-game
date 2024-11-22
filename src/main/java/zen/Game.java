@@ -10,7 +10,8 @@ public class Game {
     private IntegerProperty[][] board;
     private int snakeLength;
     private Square snakeHead;
-    private Direction dir;
+    private Direction currentDir;
+    private Direction futureDir;
     private GameTimer timer;
     private BooleanProperty gameOver;
     private IntegerProperty score;
@@ -39,6 +40,7 @@ public class Game {
 
     public void nextFrame() {
         try {
+            currentDir = futureDir;
             snakeHead = getSquareAhead();
             int squareAheadValue = board[snakeHead.y][snakeHead.x].get();
             if (squareAheadValue == 0) {} // Skip
@@ -62,11 +64,11 @@ public class Game {
     public ReadOnlyIntegerProperty scoreProperty() { return score; }
     public int getScore() { return score.get(); }
 
-    public void setDirection(Direction direction) { 
-        dir = direction;
+    public void setFutureDirection(Direction direction) { 
+        futureDir = direction;
     }
-    public boolean directionIs(Direction direction) {
-        return direction.equals(dir);
+    public boolean currentDirectionIs(Direction direction) {
+        return direction.equals(currentDir);
     }
 
     private void adjPositiveBoardValues(int value) {
@@ -78,7 +80,7 @@ public class Game {
     }
 
     private Square getSquareAhead() {
-        switch (dir) {
+        switch (currentDir) {
             case LEFT:
                 return new Square(snakeHead.y, snakeHead.x - 1);
             case RIGHT:

@@ -9,7 +9,7 @@
    <Label styleClass="heading" text="Snake Game"/>
    <VBox spacing="20.0" alignment="CENTER" >
       <Button fx:id="playBtn" text="Play"/>
-      <Button fx:id="howToPlayBtn" text="How to play?"/>
+      <Button fx:id="howToPlayBtn" text="How to Play"/>
       <Button fx:id="settingsBtn" text="Settings"/>
    </VBox>
 
