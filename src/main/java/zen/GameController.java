@@ -1,12 +1,15 @@
 package zen;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.beans.binding.ObjectBinding;
@@ -15,6 +18,8 @@ import javafx.beans.property.ReadOnlyIntegerProperty;
 
 public class GameController implements Initializable {
     @FXML private TilePane gridTp;
+    @FXML private Label scoreLbl;
+    @FXML private VBox gameOverVbx;
 
     private Game game;
 
@@ -23,11 +28,26 @@ public class GameController implements Initializable {
         game = new Game(Settings.getGridHeight(), Settings.getGridWidth()); 
         setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
+        setupArrowKeys();
+        scoreLbl.textProperty().bind(game.scoreProperty().asString("Score: %s"));
+        gameOverVbx.visibleProperty().bind(new When(game.gameOverProperty()).then(true).otherwise(false));
+    }
+
+    public void newGame() { loadScene("game"); }
+    public void returnHome() { loadScene("home"); }
+
+    private void loadScene(String sceneName) {
+        try { Start.setRoot(sceneName); }
+        catch (IOException e) { System.out.println(e.getMessage()); }
+    }
+
+    private void setupArrowKeys() {
         Start.addKeyPressedEventToScene(k -> {
-            if (k.getCode() == KeyCode.LEFT) game.setDirection(Direction.LEFT);
-            else if (k.getCode() == KeyCode.RIGHT) game.setDirection(Direction.RIGHT);
-            else if (k.getCode() == KeyCode.UP) game.setDirection(Direction.UP);
-            else if (k.getCode() == KeyCode.DOWN) game.setDirection(Direction.DOWN);
+            if (k.getCode() == KeyCode.LEFT && !game.directionIs(Direction.RIGHT)) game.setDirection(Direction.LEFT);
+            else if (k.getCode() == KeyCode.RIGHT && !game.directionIs(Direction.LEFT)) game.setDirection(Direction.RIGHT);
+            else if (k.getCode() == KeyCode.UP && !game.directionIs(Direction.DOWN)) game.setDirection(Direction.UP);
+            else if (k.getCode() == KeyCode.DOWN && !game.directionIs(Direction.UP)) game.setDirection(Direction.DOWN);
+            if (!game.isPlaying() && !game.isGameOver()) game.play();
         });
     }
 
@@ -52,4 +72,6 @@ public class GameController implements Initializable {
             }
         }
     }
+
+    public Game getGame() { return game; }
 }

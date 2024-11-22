@@ -3,9 +3,7 @@ package zen;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 
 public class Game {
     private final RandomEmptySquareGenerator resg;
@@ -13,6 +11,9 @@ public class Game {
     private int snakeLength;
     private Square snakeHead;
     private Direction dir;
+    private GameTimer timer;
+    private BooleanProperty gameOver;
+    private IntegerProperty score;
 
     public Game(int y, int x) { 
         snakeLength = Settings.getGrowth();
@@ -20,30 +21,52 @@ public class Game {
         resg = new RandomEmptySquareGenerator(this);
         setHeadOnRandomSquare(snakeLength);
         setRandomSquare(-1);
+        timer = new GameTimer(this, Settings.getSpeed());
+        gameOver = new SimpleBooleanProperty(false);
+        score = new SimpleIntegerProperty(0);
     }
-    public Game() {
-        this(0, 0);
+
+    public void play() {
+        timer.start();
     }
+
+    public boolean isPlaying() {
+        return timer.isRunning();
+    }
+
+    public ReadOnlyBooleanProperty gameOverProperty() { return gameOver; }
+    public boolean isGameOver() { return gameOver.get(); }
 
     public void nextFrame() {
         try {
             snakeHead = getSquareAhead();
-            if (board[snakeHead.y][snakeHead.x].get() == -1) {
+            int squareAheadValue = board[snakeHead.y][snakeHead.x].get();
+            if (squareAheadValue == 0) {} // Skip
+            else if (squareAheadValue > 0) { throw new IndexOutOfBoundsException(); } // Snake hit itself
+            else if (squareAheadValue == -1) { // Snake consumed a food item
                 adjPositiveBoardValues(Settings.getGrowth());
                 snakeLength += Settings.getGrowth();
                 setRandomSquare(-1);
+                score.set(score.get() + 1);
             }
+            // Add extra functionalities for new game elements here
             adjPositiveBoardValues(-1);
             board[snakeHead.y][snakeHead.x].set(snakeLength);
         }
         catch (IndexOutOfBoundsException e) {
-            System.out.println("Game Over");
+            timer.stop();
+            gameOver.set(true);
         }
     }
 
+    public ReadOnlyIntegerProperty scoreProperty() { return score; }
+    public int getScore() { return score.get(); }
+
     public void setDirection(Direction direction) { 
-        dir = direction; 
-        nextFrame();
+        dir = direction;
+    }
+    public boolean directionIs(Direction direction) {
+        return direction.equals(dir);
     }
 
     private void adjPositiveBoardValues(int value) {
