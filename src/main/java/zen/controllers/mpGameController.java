@@ -14,22 +14,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import zen.Start;
 import zen.models.Direction;
-import zen.models.Game;
+import zen.models.MultiplayerGame;
 import zen.models.Settings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.When;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 
-public class mpGameController implements Initializable {
+public class MPGameController implements Initializable {
     @FXML private TilePane gridTp;
     @FXML private Label scoreLbl;
     @FXML private VBox gameOverVbx;
 
-    private Game game;
+    private MultiplayerGame game;
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
-        game = new Game(Settings.getGridHeight(), Settings.getGridWidth()); 
+        game = new MultiplayerGame(Settings.getGridHeight(), Settings.getGridWidth()); 
         setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
         setupArrowKeys();
@@ -77,5 +77,5 @@ public class mpGameController implements Initializable {
         }
     }
 
-    public Game getGame() { return game; }
+    public MultiplayerGame getGame() { return game; }
 }

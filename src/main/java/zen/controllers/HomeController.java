@@ -23,6 +23,6 @@ public class HomeController implements Initializable {
 
     private void switchToScene(String sceneName) {
         try { Start.setRoot(sceneName); }
-        catch (IOException e) { System.out.println(e.getMessage()); }
+        catch (IOException e) { e.printStackTrace(); }
     }
 }

@@ -1,5 +1,10 @@
 package zen.controllers;
 
+import zen.Start;
+import zen.models.Direction;
+import zen.models.SingleplayerGame;
+import zen.models.Settings;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,24 +17,20 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import zen.Start;
-import zen.models.Direction;
-import zen.models.Game;
-import zen.models.Settings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.When;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 
-public class spGameController implements Initializable {
+public class SPGameController implements Initializable {
     @FXML private TilePane gridTp;
     @FXML private Label scoreLbl;
     @FXML private VBox gameOverVbx;
 
-    private Game game;
+    private SingleplayerGame game;
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
-        game = new Game(Settings.getGridHeight(), Settings.getGridWidth()); 
+        game = new SingleplayerGame(Settings.getGridHeight(), Settings.getGridWidth()); 
         setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
         setupArrowKeys();
@@ -37,12 +38,12 @@ public class spGameController implements Initializable {
         gameOverVbx.visibleProperty().bind(new When(game.gameOverProperty()).then(true).otherwise(false));
     }
 
-    public void newGame() { loadScene("game"); }
+    public void newGame() { loadScene("singleplayerGame"); }
     public void returnHome() { loadScene("home"); }
 
     private void loadScene(String sceneName) {
         try { Start.setRoot(sceneName); }
-        catch (IOException e) { System.out.println(e.getMessage()); }
+        catch (IOException e) { e.printStackTrace(); }
     }
 
     private void setupArrowKeys() {
@@ -77,5 +78,5 @@ public class spGameController implements Initializable {
         }
     }
 
-    public Game getGame() { return game; }
+    public SingleplayerGame getGame() { return game; }
 }
