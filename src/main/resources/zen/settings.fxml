@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox alignment="CENTER" spacing="50.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.SettingsController">
+<VBox alignment="CENTER" spacing="50.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.171" 
+xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.controllers.SettingsController">
    <Label styleClass="heading" text="Settings" />
    <GridPane alignment="CENTER" hgap="20.0" vgap="0.0">
       <Label styleClass="settingsLabel" text="Tick Speed (ms):" GridPane.columnIndex="0" GridPane.rowIndex="0" />

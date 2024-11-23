@@ -4,6 +4,7 @@ module zen {
     requires javafx.graphics;
     requires javafx.base;
 
-    opens zen to javafx.fxml;
+    opens zen.controllers to javafx.fxml;
+
     exports zen;
 }

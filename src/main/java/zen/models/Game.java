@@ -1,4 +1,4 @@
-package zen;
+package zen.models;
 
 import java.util.ArrayList;
 import java.util.List;

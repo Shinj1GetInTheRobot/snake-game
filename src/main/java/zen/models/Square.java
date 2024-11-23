@@ -1,4 +1,4 @@
-package zen;
+package zen.models;
 
 public class Square {
     public final int x;

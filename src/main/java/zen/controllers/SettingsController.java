@@ -1,4 +1,4 @@
-package zen;
+package zen.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import zen.Start;
+import zen.models.Settings;
 
 public class SettingsController implements Initializable {
 

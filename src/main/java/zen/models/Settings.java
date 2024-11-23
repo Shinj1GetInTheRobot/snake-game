@@ -1,4 +1,4 @@
-package zen;
+package zen.models;
 
 public class Settings {
     private static int speed = 100;

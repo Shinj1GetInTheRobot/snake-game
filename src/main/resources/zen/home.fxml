@@ -5,11 +5,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 
-<VBox styleClass="background" alignment="CENTER" spacing="50.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.HomeController">
+<VBox styleClass="background" alignment="CENTER" spacing="50.0" xmlns="http://javafx.com/javafx/8.0.171" 
+xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.controllers.HomeController">
    <Label styleClass="heading" text="Snake Game"/>
    <VBox spacing="20.0" alignment="CENTER" >
-      <Button fx:id="playBtn" text="Play"/>
-      <Button fx:id="howToPlayBtn" text="How to Play"/>
+      <Button fx:id="singleplayerBtn" text="Single-Player"/>
+      <Button fx:id="multiplayerBtn" text="Multi-Player"/>
       <Button fx:id="settingsBtn" text="Settings"/>
    </VBox>
 

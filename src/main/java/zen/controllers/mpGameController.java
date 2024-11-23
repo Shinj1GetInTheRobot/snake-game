@@ -1,4 +1,4 @@
-package zen;
+package zen.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,11 +12,15 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import zen.Start;
+import zen.models.Direction;
+import zen.models.Game;
+import zen.models.Settings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.When;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 
-public class GameController implements Initializable {
+public class mpGameController implements Initializable {
     @FXML private TilePane gridTp;
     @FXML private Label scoreLbl;
     @FXML private VBox gameOverVbx;

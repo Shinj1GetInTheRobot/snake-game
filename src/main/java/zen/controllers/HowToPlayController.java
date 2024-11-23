@@ -1,4 +1,4 @@
-package zen;
+package zen.controllers;
 
 public class HowToPlayController {
     
