@@ -31,6 +31,9 @@ public class Board {
         Square square = newRandomEmptySquare();
         board[square.y()][square.x()].set(-1);
     }
+    public void setRandApples(int quantity) {
+        for (int i = 0; i < quantity; i++) setRandApple();
+    }
 
     public ReadOnlyIntegerProperty squareProperty(int y, int x) {
         return board[y][x];
