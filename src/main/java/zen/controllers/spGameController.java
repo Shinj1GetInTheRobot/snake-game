@@ -38,13 +38,8 @@ public class SPGameController implements Initializable {
         gameOverVbx.visibleProperty().bind(new When(game.gameOverProperty()).then(true).otherwise(false));
     }
 
-    public void newGame() { loadScene("singleplayerGame"); }
-    public void returnHome() { loadScene("home"); }
-
-    private void loadScene(String sceneName) {
-        try { Start.setRoot(sceneName); }
-        catch (IOException e) { e.printStackTrace(); }
-    }
+    public void newGame() { Start.setRoot("singleplayerGame"); }
+    public void returnHome() { Start.setRoot("home"); }
 
     private void setupArrowKeys() {
         Start.addKeyPressedEventToScene(k -> {

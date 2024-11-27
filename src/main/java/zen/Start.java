@@ -23,8 +23,9 @@ public class Start extends Application {
         stage.show();
     }
 
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static void setRoot(String fxml) {
+        try { scene.setRoot(loadFXML(fxml)); }
+        catch (IOException e) { e.printStackTrace(); }
     }
 
     public static void addKeyPressedEventToScene(EventHandler<KeyEvent> e) {

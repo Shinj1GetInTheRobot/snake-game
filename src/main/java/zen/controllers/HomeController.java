@@ -16,13 +16,8 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
-        singleplayerBtn.setOnAction(EventHandler -> switchToScene("singleplayerGame"));
-        multiplayerBtn.setOnAction(EventHandler -> switchToScene("multiplayerGame"));
-        settingsBtn.setOnAction(EventHandler -> switchToScene("settings"));
-    }
-
-    private void switchToScene(String sceneName) {
-        try { Start.setRoot(sceneName); }
-        catch (IOException e) { e.printStackTrace(); }
+        singleplayerBtn.setOnAction(EventHandler -> Start.setRoot("singleplayerGame"));
+        multiplayerBtn.setOnAction(EventHandler -> Start.setRoot("multiplayerGame"));
+        settingsBtn.setOnAction(EventHandler -> Start.setRoot("settings"));
     }
 }

@@ -24,12 +24,8 @@ public class SettingsController implements Initializable {
         speedSldr.valueProperty().addListener((observable, oldValue, newValue) -> Settings.setSpeed((int)Math.round((double)newValue)));
         growthSldr.setValue(Settings.getGrowth());
         growthSldr.valueProperty().addListener((observable, oldValue, newValue) -> Settings.setGrowth((int)Math.round((double)newValue)));
-        playBtn.setOnAction(EventHandler -> switchToScene("singleplayerGame"));
-        backBtn.setOnAction(EventHandler -> switchToScene("home"));
+        playBtn.setOnAction(EventHandler -> Start.setRoot("singleplayerGame"));
+        backBtn.setOnAction(EventHandler -> Start.setRoot("home"));
     }
 
-    private void switchToScene(String sceneName) {
-        try { Start.setRoot(sceneName); }
-        catch (IOException e) { e.printStackTrace(); }
-    }
 }

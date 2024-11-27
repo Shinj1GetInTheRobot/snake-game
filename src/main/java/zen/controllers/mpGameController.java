@@ -37,13 +37,8 @@ public class MPGameController implements Initializable {
         gameOverVbx.visibleProperty().bind(new When(game.gameOverProperty()).then(true).otherwise(false));
     }
 
-    public void newGame() { loadScene("game"); }
-    public void returnHome() { loadScene("home"); }
-
-    private void loadScene(String sceneName) {
-        try { Start.setRoot(sceneName); }
-        catch (IOException e) { System.out.println(e.getMessage()); }
-    }
+    public void newGame() { Start.setRoot("game"); }
+    public void returnHome() { Start.setRoot("home"); }
 
     private void setupArrowKeys() {
         Start.addKeyPressedEventToScene(k -> {
