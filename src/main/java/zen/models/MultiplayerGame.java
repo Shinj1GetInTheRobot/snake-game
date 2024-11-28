@@ -49,4 +49,10 @@ public class MultiplayerGame implements Game {
     public int getScore() { return snake.getScore(); }
     public boolean isPlaying() { return timer.isRunning(); }
     public boolean isGameOver() { return gameOver.get(); }
+
+    @Override
+    public void setCurrentDirection(Direction direction) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setCurrentDirection'");
+    }
 }

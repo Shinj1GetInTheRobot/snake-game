@@ -6,7 +6,6 @@ import zen.models.Direction;
 import zen.models.SingleplayerGame;
 import zen.models.Settings;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -14,11 +13,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.When;
 import javafx.beans.property.ReadOnlyIntegerProperty;
@@ -45,23 +44,7 @@ public class SPGameController implements Initializable {
     public void returnHome() { Start.setRoot("home"); }
 
     private void setupArrowKeys() {
-        Start.addKeyPressedEventToScene(k -> {
-            Direction direction;
-            switch (k.getCode()) {
-                case LEFT: direction = Direction.LEFT; break;
-                case RIGHT: direction = Direction.RIGHT; break;
-                case UP: direction = Direction.UP; break;
-                case DOWN: direction = Direction.DOWN; break;
-                default: return;
-            }
-            if (game.isPlaying()) {
-                game.setFutureDirection(direction);
-                return;
-            }
-            if (game.isGameOver()) return;
-            game.setCurrentDirection(direction);
-            game.play();
-        });
+        Start.addKeyPressedEventToScene(new ArrowKeysHandler(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, game));
     }
     
     private void setupGrid() {

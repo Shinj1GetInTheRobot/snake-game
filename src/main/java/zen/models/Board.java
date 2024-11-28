@@ -18,13 +18,6 @@ public class Board {
     private IntegerProperty[][] board;
     // Warning: board includes the visible grid + a hidden outer layer of invisible squares
     //          used for when a snake goes out of bounds
-    // Magic Numbers:
-    //      0 = Empty Square
-    //      1 = Snake1
-    //      2 = Snake2
-    //      3 = Snake3, etc...
-    //     -1 = Hidden Outer Square
-    //     -2 = Apple
 
     public Board(int y, int x) {
         this.board = createNewBoard(y, x);
