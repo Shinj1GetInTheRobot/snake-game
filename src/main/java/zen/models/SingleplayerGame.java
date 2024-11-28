@@ -10,8 +10,8 @@ public class SingleplayerGame implements Game {
 
     public SingleplayerGame(int y, int x) {
         board = new Board(y, x);
-        snake = new Snake(Settings.getGrowth(), board.newRandomEmptySquare());
-        board.setSnakeHead(snake);
+        snake = new Snake(Settings.getGrowth(), 1, board);
+        board.setSquare(snake.getHead(), snake.id);
         board.setRandApple();
         timer = new GameTimer(this, Settings.getSpeed());
         gameOver = new SimpleBooleanProperty(false);
@@ -22,36 +22,40 @@ public class SingleplayerGame implements Game {
     }
     
     public void nextFrame() {
-        try {
-            snake.move();
-            int squareMovedVal = board.getValue(snake.getHead());
-            // Throws IndexOutOfBoundsException if snake head ran off board
-            if (squareMovedVal == 0) {} // Square moved was empty -> Skip
-            else if (squareMovedVal > 0) { throw new Exception(); } // Snake hit itself
-            else if (squareMovedVal == -1) { // Snake consumed an apple
-                board.adjPositiveBoardValues(Settings.getGrowth());
-                snake.incrLength(Settings.getGrowth());
-                board.setRandApple();
-                snake.incrScore();
-            }
-            else {} // Add extra functionalities for new game elements here!
-            board.adjPositiveBoardValues(-1);
-            board.setSnakeHead(snake);
-        }
-        catch (Exception e) {
+        snake.stretchForward(); // Note: Snake head moves forward, but tail does not.
+        if (snake.wentOffBoard() || snake.ranIntoSelfIgnoreTail()) snake.kill();
+        if (snake.isDead()) {
+            snake.moveDeadOnBoard();
             timer.stop();
             gameOver.set(true);
+            return;
         }
+        if (snake.ateApple()) {
+            snake.incrGrowFactor(Settings.getGrowth());
+            snake.incrScore();
+            snake.moveLiveOnBoard();
+            board.setRandApple();
+            return;
+        }
+        snake.moveLiveOnBoard();
     }
+    
 
     public ReadOnlyIntegerProperty scoreProperty() { return snake.scoreProperty(); }
     public ReadOnlyIntegerProperty squareProperty(int y, int x) { return board.squareProperty(y, x); }
     public ReadOnlyBooleanProperty gameOverProperty() { return gameOver; }
-    public void setFutureDirection(Direction direction) { snake.setFutureDirection(direction); }
-    public int getScore() { return snake.getScore(); }
+
     public boolean currentDirectionIs(Direction direction) { return snake.getCurrentDirection() == direction; }
+    public boolean futureDirectionIs(Direction direction) {return snake.getFutureDirection() == direction; }
+    public boolean futureFutureDirectionIs(Direction direction) {return snake.getFutureFutureDirection() == direction; }
+    public void setCurrentDirection(Direction direction) { snake.setCurrentDirection(direction); }
+    public void setFutureDirection(Direction direction) { snake.setFutureDirection(direction); }
+    public void setFutureFutureDirection(Direction direction) { snake.setFutureFutureDirection(direction); }
+
+
     public int getBoardHeight() { return board.getBoardHeight(); }
     public int getBoardWidth() { return board.getBoardWidth(); }
+    public int getScore() { return snake.getScore(); }
     public boolean isPlaying() { return timer.isRunning(); }
     public boolean isGameOver() { return gameOver.get(); }
 }
