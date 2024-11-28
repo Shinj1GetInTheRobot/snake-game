@@ -2,7 +2,6 @@ package zen.controllers;
 
 import zen.Start;
 import zen.models.Board;
-import zen.models.Direction;
 import zen.models.SingleplayerGame;
 import zen.models.Settings;
 
@@ -10,10 +9,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;

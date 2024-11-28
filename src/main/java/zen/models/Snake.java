@@ -2,7 +2,6 @@ package zen.models;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
-import java.util.Collection;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;

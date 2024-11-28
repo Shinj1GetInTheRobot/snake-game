@@ -1,8 +1,5 @@
 package zen.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
