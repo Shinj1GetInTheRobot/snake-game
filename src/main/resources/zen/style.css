@@ -9,6 +9,13 @@
     -fx-underline: true;
 }
 
+.yellowheading {
+    -fx-font-size: 30pt;
+    -fx-text-fill: #ffff00;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
 .button {
     -fx-font-size: 15pt;
     -fx-text-fill: #000000;

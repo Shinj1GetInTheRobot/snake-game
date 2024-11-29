@@ -2,7 +2,6 @@ package zen.controllers;
 
 import zen.Start;
 import zen.models.Board;
-import zen.models.Game;
 import zen.models.MultiplayerGame;
 import zen.models.Status;
 import zen.models.Settings;
@@ -25,19 +24,21 @@ import javafx.beans.property.ReadOnlyIntegerProperty;
 
 public class MPGameController implements Initializable {
     @FXML private TilePane gridTp;
-    @FXML private Label scoreLbl;
+    @FXML private Label snake1ScoreLbl;
+    @FXML private Label snake2ScoreLbl;
     @FXML private VBox gameOverVbx;
 
-    private Game game;
+    private MultiplayerGame game;
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
-        game = new MultiplayerGame(Settings.getGridHeight() + 2, Settings.getGridWidth() + 2, 2);
+        game = new MultiplayerGame(Settings.getGridHeight() + 2, Settings.getGridWidth() + 2, Settings.getNumOfMultiPlayers());
         // + 2 adds hidden outer layer around the grid (used when a snake goes out of bounds)
         setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
         setupArrowKeys();
-        scoreLbl.textProperty().bind(game.getSnake(1).scoreProperty().asString("Score: %s"));
+        snake1ScoreLbl.textProperty().bind(game.getSnake(1).scoreProperty().asString("Score: %s"));
+        snake2ScoreLbl.textProperty().bind(game.getSnake(2).scoreProperty().asString("Score: %s"));
         gameOverVbx.visibleProperty().bind(game.statusProperty().isEqualTo(Status.DEAD));
     }
 
@@ -51,6 +52,9 @@ public class MPGameController implements Initializable {
         Start.addKeyPressedEventToScene(
             new ArrowKeysHandler(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, game, game.getSnake(2))
         );
+        // Start.addKeyPressedEventToScene(
+        //     new ArrowKeysHandler(KeyCode.T, KeyCode.G, KeyCode.F, KeyCode.H, game, game.getSnake(3))
+        // );
     }
     
     private void setupGrid() {
@@ -68,10 +72,14 @@ public class MPGameController implements Initializable {
             for (int x = 0; x < game.getBoard().getWidth(); x++) {
                 Rectangle rect = (Rectangle) gridTp.getChildren().get(y*game.getBoard().getWidth() + x);
                 ReadOnlyIntegerProperty squareProperty = game.getBoard().squareProperty(y, x);
-                ObjectBinding<Color> s2 = new When(squareProperty.isEqualTo(1)).then(Color.GREEN).otherwise(Color.YELLOW);
-                ObjectBinding<Color> w1 = new When(squareProperty.isEqualTo(Board.EMPTYSQUARE)).then(Color.BLACK).otherwise(s2);
+
+                // Can add more colours for additional snakes here
+                //ObjectBinding<Color> s2 = new When(squareProperty.isEqualTo(2)).then(Color.YELLOW).otherwise(Color.BLUE);
+                ObjectBinding<Color> s1 = new When(squareProperty.isEqualTo(1)).then(Color.GREEN).otherwise(Color.YELLOW);
+
+                ObjectBinding<Color> w1 = new When(squareProperty.isEqualTo(Board.EMPTYSQUARE)).then(Color.BLACK).otherwise(s1);
                 ObjectBinding<Color> w2 = new When(squareProperty.isEqualTo(Board.OUTOFBOUNDS)).then(Color.rgb(27, 27, 27)).otherwise(w1);
-                ObjectBinding<Color> w3 = new When(squareProperty.isEqualTo(Board.DEAD)).then(Color.GREY).otherwise(w2);
+                ObjectBinding<Color> w3 = new When(squareProperty.isEqualTo(Board.DEAD)).then(Color.LIGHTGREY).otherwise(w2);
                 ObjectBinding<Color> w4 = new When(squareProperty.isEqualTo(Board.APPLE)).then(Color.RED).otherwise(w3);
                 rect.fillProperty().bind(w4);
             }

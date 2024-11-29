@@ -15,7 +15,7 @@ public class Board {
     public static final int EMPTYSQUARE = 0;
 
     private final Random rand;
-    private IntegerProperty[][] board;
+    private final IntegerProperty[][] board;
     // Warning: board includes the visible grid + a hidden outer layer of invisible squares
     //          used for when a snake goes out of bounds
 

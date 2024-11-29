@@ -2,7 +2,6 @@ package zen.controllers;
 
 import zen.Start;
 import zen.models.Board;
-import zen.models.Game;
 import zen.models.SingleplayerGame;
 import zen.models.Status;
 import zen.models.Settings;
@@ -28,7 +27,7 @@ public class SPGameController implements Initializable {
     @FXML private Label scoreLbl;
     @FXML private VBox gameOverVbx;
 
-    private Game game;
+    private SingleplayerGame game;
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
