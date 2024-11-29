@@ -2,6 +2,7 @@ package zen.controllers;
 
 import zen.Start;
 import zen.models.Board;
+import zen.models.Game;
 import zen.models.SingleplayerGame;
 import zen.models.Status;
 import zen.models.Settings;
@@ -27,7 +28,7 @@ public class SPGameController implements Initializable {
     @FXML private Label scoreLbl;
     @FXML private VBox gameOverVbx;
 
-    private SingleplayerGame game;
+    private Game game;
 
     @Override
     public void initialize(URL url, ResourceBundle rsc) {
@@ -36,7 +37,7 @@ public class SPGameController implements Initializable {
         setupGrid(); // Hardcoded 50 * 25 grid
         bindGridToBoard();
         setupArrowKeys();
-        scoreLbl.textProperty().bind(game.scoreProperty().asString("Score: %s"));
+        scoreLbl.textProperty().bind(game.getSnake(1).scoreProperty().asString("Score: %s"));
         gameOverVbx.visibleProperty().bind(game.statusProperty().isEqualTo(Status.DEAD));
     }
 
@@ -44,7 +45,12 @@ public class SPGameController implements Initializable {
     public void returnHome() { Start.setRoot("home"); }
 
     private void setupArrowKeys() {
-        Start.addKeyPressedEventToScene(new ArrowKeysHandler(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, game));
+        Start.addKeyPressedEventToScene(
+            new ArrowKeysHandler(KeyCode.UP, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, game, game.getSnake(1))
+        );
+        Start.addKeyPressedEventToScene(
+            new ArrowKeysHandler(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, game, game.getSnake(1))
+        );
     }
     
     private void setupGrid() {
@@ -52,16 +58,16 @@ public class SPGameController implements Initializable {
         gridTp.setMinWidth(790);
         gridTp.setMaxHeight(405);
         gridTp.setMinHeight(405);
-        for (int i = 0; i < game.getBoardHeight() * game.getBoardWidth(); i++) {
+        for (int i = 0; i < game.getBoard().getHeight() * game.getBoard().getWidth(); i++) {
             gridTp.getChildren().add(new Rectangle(15, 15));
         }
     }
 
     private void bindGridToBoard() {
-        for (int y = 0; y < game.getBoardHeight(); y++) {
-            for (int x = 0; x < game.getBoardWidth(); x++) {
-                Rectangle rect = (Rectangle) gridTp.getChildren().get(y*game.getBoardWidth() + x);
-                ReadOnlyIntegerProperty squareProperty = game.squareProperty(y, x);
+        for (int y = 0; y < game.getBoard().getHeight(); y++) {
+            for (int x = 0; x < game.getBoard().getWidth(); x++) {
+                Rectangle rect = (Rectangle) gridTp.getChildren().get(y*game.getBoard().getWidth() + x);
+                ReadOnlyIntegerProperty squareProperty = game.getBoard().squareProperty(y, x);
                 ObjectBinding<Color> w1 = new When(squareProperty.isEqualTo(Board.EMPTYSQUARE)).then(Color.BLACK).otherwise(Color.GREEN);
                 ObjectBinding<Color> w2 = new When(squareProperty.isEqualTo(Board.OUTOFBOUNDS)).then(Color.rgb(27, 27, 27)).otherwise(w1);
                 ObjectBinding<Color> w3 = new When(squareProperty.isEqualTo(Board.DEAD)).then(Color.GREY).otherwise(w2);
@@ -69,6 +75,4 @@ public class SPGameController implements Initializable {
             }
         }
     }
-
-    public SingleplayerGame getGame() { return game; }
 }

@@ -1,19 +1,12 @@
 package zen.models;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
+
 public interface Game {
     public void nextFrame();
-    public void play();
-
-    public int getBoardHeight();
-    public int getBoardWidth();
+    public void playIfReady();
+    public Board getBoard();
     public Status getStatus();
-
-    public boolean currentDirectionIs(Direction direction);
-    public boolean futureDirectionIs(Direction direction);
-    public boolean futureFutureDirectionIs(Direction direction);
-    public void setCurrentDirection(Direction direction);
-    public void setFutureDirection(Direction direction);
-    public void setFutureFutureDirection(Direction direction);
-
-
+    public Snake getSnake(int id);
+    public ReadOnlyObjectProperty<Status> statusProperty();
 }

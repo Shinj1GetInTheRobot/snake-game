@@ -1,61 +1,84 @@
 package zen.models;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class MultiplayerGame implements Game {
-    private Snake snake;
-    private Board board;
-    private GameTimer timer;
-    private BooleanProperty gameOver;
+    private final List<Snake> snakes;
+    private final List<Snake> liveSnakes;
+    private final Board board;
+    private final GameTimer timer;
+    private final SimpleObjectProperty<Status> status;
 
-    public MultiplayerGame(int y, int x) {
+    public MultiplayerGame(int y, int x, int players) {
         board = new Board(y, x);
-        snake = new Snake(Settings.getGrowth(), 1, board);
-        board.setSquare(snake.getHead(), snake.id);
-        board.setRandApple();
+        snakes = Snake.createNewSnakes(players, Settings.getGrowth(), board);
+        for (Snake snake : snakes) board.setSquare(snake.getHead(), snake.id);
+        board.setRandApples(players);
         timer = new GameTimer(this, Settings.getSpeed());
-        gameOver = new SimpleBooleanProperty(false);
+        status = new SimpleObjectProperty<Status>(Status.READY);
+        liveSnakes = new ArrayList<Snake>();
     }
 
-    public void play() {
+    public void playIfReady() {
+        if (!allSnakesAreReady()) return;
+        status.set(Status.LIVE);
+        for (Snake snake : snakes) {
+            snake.setStatusToLIVE();
+            liveSnakes.add(snake);
+        }
         timer.start();
     }
     
     public void nextFrame() {
-        
+        for (Snake snake : liveSnakes) snake.stretchForward(); // Note: Snake head moves forward, but tail does not.
+        Iterator<Snake> snakeIterator = liveSnakes.iterator();
+        while (snakeIterator.hasNext()) {
+            Snake snake = snakeIterator.next();
+            if (killSnakeIfDeserveIt(snake)) {
+                snake.moveDeadOnBoard();
+                snakeIterator.remove();
+            }
+            else if (snake.ateApple()) {
+                snake.moveLiveOnBoard();
+                snake.incrGrowFactor(Settings.getGrowth());
+                snake.incrScore();
+                board.setRandApple();
+            }
+            else snake.moveLiveOnBoard();
+        }
+        if (liveSnakes.size() <= 1) {
+            timer.stop();
+            status.set(Status.DEAD);
+        }
     }
 
+    // Returns true if snake was killed
+    private boolean killSnakeIfDeserveIt(Snake snake1) {
+        if (snake1.wentOffBoard()) {
+            snake1.kill();
+            return true;
+        }
+        for (Snake snake2 : snakes) {
+            if (snake1.ranIntoSnakeIgnoreTail(snake2)) {
+                snake1.kill();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean allSnakesAreReady() {
+        for (Snake snake : snakes) if (!snake.isReady()) return false;
+        return true;
+    }
     
+    public ReadOnlyObjectProperty<Status> statusProperty() { return status; }
 
-    public ReadOnlyIntegerProperty scoreProperty() { return snake.scoreProperty(); }
-    public ReadOnlyIntegerProperty squareProperty(int y, int x) { return board.squareProperty(y, x); }
-    public ReadOnlyBooleanProperty gameOverProperty() { return gameOver; }
-
-    public boolean currentDirectionIs(Direction direction) { return snake.getCurrentDirection() == direction; }
-    public boolean futureDirectionIs(Direction direction) {return snake.getFutureDirection() == direction; }
-    public boolean futureFutureDirectionIs(Direction direction) {return snake.getFutureFutureDirection() == direction; }
-    public void setFutureDirection(Direction direction) { snake.setFutureDirection(direction); }
-    public void setFutureFutureDirection(Direction direction) { snake.setFutureFutureDirection(direction); }
-
-
-    public int getBoardHeight() { return board.getBoardHeight(); }
-    public int getBoardWidth() { return board.getBoardWidth(); }
-    public int getScore() { return snake.getScore(); }
-    public boolean isPlaying() { return timer.isRunning(); }
-    public boolean isGameOver() { return gameOver.get(); }
-
-    @Override
-    public void setCurrentDirection(Direction direction) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCurrentDirection'");
-    }
-
-    @Override
-    public Status getStatus() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStatus'");
-    }
+    public Board getBoard() { return board; }
+    public Status getStatus() { return status.get(); }
+    public Snake getSnake(int id) { return snakes.get(id-1); }
 }

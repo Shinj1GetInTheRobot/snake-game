@@ -1,3 +1,3 @@
 package zen.models;
 
-public enum Status { READY, LIVE, DEAD; }
+public enum Status { NOT_READY, READY, LIVE, DEAD; }

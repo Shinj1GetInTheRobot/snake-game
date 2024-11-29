@@ -53,8 +53,8 @@ public class Board {
         return board[square.y][square.x];
     }
 
-    public int getBoardHeight() { return board.length; }
-    public int getBoardWidth() { return board[0].length; }
+    public int getHeight() { return board.length; }
+    public int getWidth() { return board[0].length; }
 
     // public void adjPositiveBoardValues(int value) {
     //     for (IntegerProperty[] row : board) {

@@ -17,8 +17,10 @@ public class SingleplayerGame implements Game {
         status = new SimpleObjectProperty<Status>(Status.READY);
     }
 
-    public void play() {
+    public void playIfReady() {
+        if (status.get() != Status.READY) return;
         status.set(Status.LIVE);
+        snake.setStatusToLIVE();
         timer.start();
     }
     
@@ -32,30 +34,18 @@ public class SingleplayerGame implements Game {
             return;
         }
         if (snake.ateApple()) {
+            snake.moveLiveOnBoard();
             snake.incrGrowFactor(Settings.getGrowth());
             snake.incrScore();
-            snake.moveLiveOnBoard();
             board.setRandApple();
             return;
         }
         snake.moveLiveOnBoard();
     }
     
-
-    public ReadOnlyIntegerProperty scoreProperty() { return snake.scoreProperty(); }
-    public ReadOnlyIntegerProperty squareProperty(int y, int x) { return board.squareProperty(y, x); }
     public ReadOnlyObjectProperty<Status> statusProperty() { return status; }
 
-    public boolean currentDirectionIs(Direction direction) { return snake.getCurrentDirection() == direction; }
-    public boolean futureDirectionIs(Direction direction) {return snake.getFutureDirection() == direction; }
-    public boolean futureFutureDirectionIs(Direction direction) {return snake.getFutureFutureDirection() == direction; }
-    public void setCurrentDirection(Direction direction) { snake.setCurrentDirection(direction); }
-    public void setFutureDirection(Direction direction) { snake.setFutureDirection(direction); }
-    public void setFutureFutureDirection(Direction direction) { snake.setFutureFutureDirection(direction); }
-
-
-    public int getBoardHeight() { return board.getBoardHeight(); }
-    public int getBoardWidth() { return board.getBoardWidth(); }
-    public int getScore() { return snake.getScore(); }
+    public Board getBoard() { return board; }
     public Status getStatus() { return status.get(); }
+    public Snake getSnake(int id) { return snake; } // Warning: Since single-player mode has only 1 snake, just return directly
 }

@@ -1,7 +1,9 @@
 package zen.models;
 
 import java.util.Deque;
+import java.util.List;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
@@ -18,6 +20,12 @@ public class Snake {
     private Status status;
     private IntegerProperty score;
 
+    public static List<Snake> createNewSnakes(int total, int length, Board board) {
+        List<Snake> snakes = new ArrayList<Snake>();
+        for (int i = 1; i <= total; i++) snakes.add(new Snake(length, i, board));
+        return snakes;
+    }
+
     public Snake(int length, int id, Board board) {
         this.board = board;
         this.id = id;
@@ -28,7 +36,7 @@ public class Snake {
         currentDir = Direction.NONE;
         futureDir = Direction.NONE;
         futureFutureDir = Direction.NONE;
-        status = Status.LIVE;
+        status = Status.NOT_READY;
     }
 
     // Unsafe! Snake can move off the board or crash into object!
@@ -78,8 +86,8 @@ public class Snake {
 
     public boolean wentOffBoard() {
         Square head = squares.getFirst();
-        return (head.y == 0 || head.y == board.getBoardHeight() - 1 ||
-                head.x == 0 || head.x == board.getBoardWidth() - 1);
+        return (head.y == 0 || head.y == board.getHeight() - 1 ||
+                head.x == 0 || head.x == board.getWidth() - 1);
     }
 
     public boolean ranIntoSnakeIgnoreTail(Snake snake) {
@@ -99,6 +107,7 @@ public class Snake {
     }
     
     public final Deque<Square> getSquares() { return squares; }
+    public final Status getStatus() { return status; }
     public final Square getHead() { return squares.getFirst(); }
     public final Direction getCurrentDirection() { return currentDir; }
     public final int getScore() { return score.get(); }
@@ -109,19 +118,23 @@ public class Snake {
     public void setCurrentDirection(Direction currentDir ) { this.currentDir = currentDir; }
     public void setFutureDirection(Direction futureDir) { this.futureDir = futureDir; }
     public void setFutureFutureDirection(Direction futureFutureDir) { this.futureFutureDir = futureFutureDir; }
-
-    public void incrScore() { score.set(score.get() + 1); }
+    
+    public void setStatusToLIVE() { status = Status.LIVE; }
+    public void setStatusToREADY() { status = Status.READY; }
     public void kill() { status = Status.DEAD; }
     public boolean isDead() { return (status == Status.DEAD); }
+    public boolean isReady() { return (status == Status.READY); }
+    public boolean isLive() { return (status == Status.LIVE); }
     public void incrGrowFactor(int incr) { growFactor += incr; }
+    public void incrScore() { score.set(score.get() + 1); }
 
     @Override
     public String toString() {
-        String s = "";
+        String s = "\n";
         s += String.format("Snake %d)\n", id);
         s += String.format("   squares = %s\n", squares);
         s += String.format("   currentDir = %s, futureDir = %s, futureFutureDir = %s\n", currentDir, futureDir, futureFutureDir);
-        s += String.format("   growFactor = %s, status = %s, score = %s", growFactor, status, score.get());
+        s += String.format("   growFactor = %s, status = %s, score = %s\n", growFactor, status, score.get());
         return s;
     }
 }
