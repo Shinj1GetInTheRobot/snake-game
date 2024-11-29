@@ -52,4 +52,10 @@ public class MultiplayerGame implements Game {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setCurrentDirection'");
     }
+
+    @Override
+    public Status getStatus() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getStatus'");
+    }
 }

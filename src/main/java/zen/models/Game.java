@@ -1,16 +1,12 @@
 package zen.models;
 
-import javafx.beans.property.ReadOnlyBooleanProperty;
-
 public interface Game {
     public void nextFrame();
     public void play();
 
-    public ReadOnlyBooleanProperty gameOverProperty();
-    public boolean isGameOver();
     public int getBoardHeight();
     public int getBoardWidth();
-    public boolean isPlaying();
+    public Status getStatus();
 
     public boolean currentDirectionIs(Direction direction);
     public boolean futureDirectionIs(Direction direction);

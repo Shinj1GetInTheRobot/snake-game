@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import zen.models.Direction;
 import zen.models.Game;
+import zen.models.Status;
 
 public class ArrowKeysHandler implements EventHandler<KeyEvent> {
     private final Game game;
@@ -28,7 +29,7 @@ public class ArrowKeysHandler implements EventHandler<KeyEvent> {
         else if (k.getCode() == right) direction = Direction.RIGHT;
         else if (k.getCode() == up) direction = Direction.UP;
         else if (k.getCode() == down) direction = Direction.DOWN;
-        if (game.isPlaying()) {
+        if (game.getStatus() == Status.LIVE) {
             if (game.futureDirectionIs(Direction.NONE)) {
                 if (game.currentDirectionIs(Direction.getOpposite(direction))) return;
                 game.setFutureDirection(direction);
@@ -38,7 +39,7 @@ public class ArrowKeysHandler implements EventHandler<KeyEvent> {
             game.setFutureFutureDirection(direction);
             return;
         }
-        if (game.isGameOver()) return;
+        if (game.getStatus() == Status.DEAD) return;
         game.setCurrentDirection(direction);
         game.play();
     }

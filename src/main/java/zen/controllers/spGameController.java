@@ -3,6 +3,7 @@ package zen.controllers;
 import zen.Start;
 import zen.models.Board;
 import zen.models.SingleplayerGame;
+import zen.models.Status;
 import zen.models.Settings;
 
 import java.net.URL;
@@ -36,7 +37,7 @@ public class SPGameController implements Initializable {
         bindGridToBoard();
         setupArrowKeys();
         scoreLbl.textProperty().bind(game.scoreProperty().asString("Score: %s"));
-        gameOverVbx.visibleProperty().bind(new When(game.gameOverProperty()).then(true).otherwise(false));
+        gameOverVbx.visibleProperty().bind(game.statusProperty().isEqualTo(Status.DEAD));
     }
 
     public void newGame() { Start.setRoot("singleplayerGame"); }
