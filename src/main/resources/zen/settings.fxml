@@ -13,7 +13,7 @@ xmlns:fx="http://javafx.com/fxml/1" fx:controller="zen.controllers.SettingsContr
    <Label styleClass="heading" text="Settings" />
    <GridPane alignment="CENTER" hgap="20.0" vgap="0.0">
       <Label styleClass="settingsLabel" text="Tick Speed (ms):" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-      <Slider fx:id="speedSldr" majorTickUnit="100.0" max="1000" min="10.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <Slider fx:id="speedSldr" majorTickUnit="290.0" max="300" min="10.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
       <Label styleClass="settingsLabel" text="Growth:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
       <Slider fx:id="growthSldr" snapToTicks="true" minorTickCount="0" majorTickUnit="1.0" max="10.0" min="1.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </GridPane>

@@ -93,7 +93,8 @@ public class Snake {
     public boolean ranIntoSnakeIgnoreTail(Snake snake) {
         Square head = this.squares.getFirst();
         for (Square square : snake.getSquares()) {
-            if (head.overlaps(square) && square != head && square != snake.getSquares().getLast()) return true;
+            if (head.overlaps(square) && square != head && 
+                (square != snake.getSquares().getLast() || snake.getGrowFactor() != 0)) return true;
             // Note: Ignores the tail square of a snake (which has not been moved yet)
         }
         return false;
@@ -106,13 +107,14 @@ public class Snake {
         return (board.getValue(squares.getFirst()) == Board.APPLE);
     }
     
+    private final int getGrowFactor() { return growFactor; }
     public final Deque<Square> getSquares() { return squares; }
     public final Status getStatus() { return status; }
     public final Square getHead() { return squares.getFirst(); }
     public final Direction getCurrentDirection() { return currentDir; }
     public final int getScore() { return score.get(); }
-    public Direction getFutureFutureDirection() { return futureFutureDir; }
-    public Direction getFutureDirection() { return futureDir; }
+    public final Direction getFutureFutureDirection() { return futureFutureDir; }
+    public final Direction getFutureDirection() { return futureDir; }
     public final ReadOnlyIntegerProperty scoreProperty() { return score; }
 
     public void setCurrentDirection(Direction currentDir ) { this.currentDir = currentDir; }
